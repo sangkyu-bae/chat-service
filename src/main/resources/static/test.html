@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <script>
+        function connect() {
+            const socket = new WebSocket('ws://localhost:8080/ws-stomp');
+            
+            socket.onopen = function(e) {
+                console.log("[open] Connection established");
+                // STOMP 프레임 형식으로 메시지 전송
+                const subscribeMessage = 'SUBSCRIBE\nid:sub-0\ndestination:/sub/stock\n\n\0';
+                socket.send(subscribeMessage);
+            };
+
+            socket.onmessage = function(event) {
+                console.log(`[message] Data received from server: ${event.data}`);
+            };
+
+            socket.onclose = function(event) {
+                console.log(`[close] Connection closed, code=${event.code} reason=${event.reason}`);
+            };
+
+            socket.onerror = function(error) {
+                console.log(`[error] ${error.message}`);
+            };
+        }
+    </script>
+</head>
+<body>
+    <button onclick="connect()">Connect</button>
+</body>
+</html> 
