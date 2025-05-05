@@ -2,6 +2,9 @@ package com.example.chatservice.domain.chat;
 
 import com.example.chatservice.common.JsonConverter;
 import com.example.chatservice.modules.redis.RedisRepository;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -50,6 +53,10 @@ public class ChatRepository extends RedisRepository {
 
     public void saveChat(ChatMessage chatMessage,String chatRoom){
         listTypeSave(chatRoom, jsonConverter.toJson(chatMessage));
+    }
+
+    public boolean existChatRoom(String userId, String chatRoom){
+        return existsInSet(userId,chatRoom);
     }
 
 }

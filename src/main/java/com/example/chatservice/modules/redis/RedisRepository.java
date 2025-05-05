@@ -1,6 +1,8 @@
 package com.example.chatservice.modules.redis;
 
+import io.lettuce.core.api.sync.RedisCommands;
 import lombok.AllArgsConstructor;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
@@ -74,5 +76,13 @@ public class RedisRepository{
         }
 
         return null;
+    }
+
+    public boolean existsInSet(String key, String value) {
+        return Boolean.TRUE.equals(redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+            RedisCommands<String, String> commands = (RedisCommands<String, String>) connection.getNativeConnection();
+            return ((io.lettuce.core.api.sync.RedisCommands<String, String>) commands)
+                    .sismember(key, value);
+        }));
     }
 }
