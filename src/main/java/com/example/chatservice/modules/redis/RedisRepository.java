@@ -78,11 +78,15 @@ public class RedisRepository{
         return null;
     }
 
+//    public boolean existsInSet(String key, String value) {
+//        return Boolean.TRUE.equals(redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+//            RedisCommands<String, String> commands = (RedisCommands<String, String>) connection.getNativeConnection();
+//            return ((io.lettuce.core.api.sync.RedisCommands<String, String>) commands)
+//                    .sismember(key, value);
+//        }));
+//    }
+
     public boolean existsInSet(String key, String value) {
-        return Boolean.TRUE.equals(redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisCommands<String, String> commands = (RedisCommands<String, String>) connection.getNativeConnection();
-            return ((io.lettuce.core.api.sync.RedisCommands<String, String>) commands)
-                    .sismember(key, value);
-        }));
+        return Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, value));
     }
 }

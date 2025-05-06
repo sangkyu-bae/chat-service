@@ -56,7 +56,7 @@ public class ChatRepository extends RedisRepository {
     }
 
     public boolean existChatRoom(String userId, String chatRoom){
-        return existsInSet(userId,chatRoom);
+        return existsInSet("user:chatrooms:" + userId,chatRoom);
     }
 
 }
