@@ -1,5 +1,8 @@
 package com.example.chatservice.infra;
 
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.async.RedisAsyncCommands;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,13 @@ public class RedisConfig {
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory(host, port);
+    }
+    @Bean
+    public RedisAsyncCommands<String, String> redisAsyncCommands() {
+        // Lettuce 클라이언트 생성 및 연결 설정
+        RedisClient redisClient = RedisClient.create("redis://localhost:6379");
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        return connection.async();  // 비동기 명령어를 처리하는 RedisAsyncCommands 반환
     }
 
     @Bean

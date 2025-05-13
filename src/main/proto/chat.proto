@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.chat";
+
+package chat;
+
+service ChatService {
+  rpc SendMessage (ChatMsg) returns (ChatResponse) {}
+  rpc StreamMessages (ChatMsg) returns (stream ChatMsg) {}
+}
+
+message ChatMsg {
+  string roomId = 1;
+  string userId = 2;
+  string content = 3;
+  int64 timestamp = 4;
+}
+
+message ChatResponse {
+  bool success = 1;
+  string message = 2;
+}

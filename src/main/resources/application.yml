@@ -45,3 +45,7 @@ logging:
 test:
   stock:
     room: test
+
+grpc:
+  server:
+    address: localhost:9090

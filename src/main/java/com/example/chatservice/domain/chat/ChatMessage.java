@@ -1,17 +1,14 @@
 package com.example.chatservice.domain.chat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
+@Setter @Builder
 public class ChatMessage {
 
     private String sendUserId;
@@ -20,4 +17,5 @@ public class ChatMessage {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime sendTime;
+
 }

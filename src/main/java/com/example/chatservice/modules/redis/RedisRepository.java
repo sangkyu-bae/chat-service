@@ -1,5 +1,8 @@
 package com.example.chatservice.modules.redis;
 
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisCallback;
@@ -10,12 +13,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 public class RedisRepository{
 
     private RedisTemplate<String,Object> redisTemplate;
     private SetOperations<String,Object> setOperations;
     private RedisOperations<String, Object> operations;
+
+    private RedisAsyncCommands<String, String> redisAsyncCommands;
 
     public RedisRepository(RedisTemplate<String, Object> redisTemplate){
         this.redisTemplate = redisTemplate;
@@ -89,4 +95,5 @@ public class RedisRepository{
     public boolean existsInSet(String key, String value) {
         return Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, value));
     }
+
 }

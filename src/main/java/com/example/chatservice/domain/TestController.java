@@ -53,30 +53,10 @@ public class TestController {
 
         log.info("start");
 
-        long startone = System.currentTimeMillis(); // 시작 시간 찍기
         List<Thread> threads = IntStream.range(0, 1_000_000)
                 .mapToObj(i -> Thread.ofVirtual().unstarted(() -> {})) // VirtualThread로 변경!
-//                .collect(Collectors.toList());
-                .parallel().toList();
-        long threadend = System.currentTimeMillis(); // 끝나는 시간 찍기
-
-        log.info("걸린 시간(ms): " + (threadend - startone));
-        log.info("걸린 시간(s): " + (threadend - startone) / 1000.0);
-
-        long starttwo = System.currentTimeMillis(); // 시작 시간 찍기
-
-        List<Thread> threaOne = IntStream.range(0, 1_000_000)
-                .mapToObj(i -> Thread.ofVirtual().unstarted(() -> {})) // VirtualThread로 변경!
                 .collect(Collectors.toList());
-
 //                .parallel().toList();
-
-        long threadtwoend = System.currentTimeMillis(); // 끝나는 시간 찍기
-
-        log.info("걸린 시간(ms): " + (threadtwoend - starttwo));
-        log.info("걸린 시간(s): " + (threadtwoend - starttwo) / 1000.0);
-
-        threads.forEach(Thread::start);
 
         for (Thread thread : threads) {
             try {

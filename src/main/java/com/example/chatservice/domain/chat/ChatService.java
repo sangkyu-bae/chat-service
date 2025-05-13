@@ -24,6 +24,7 @@ public class ChatService extends SendMsg {
 
     public void sendMsg(ChatMessage chatMessage){
         joinChat("1",chatMessage.getSendUserId());
+        send("/sub/chat/room/1",chatMessage);
     }
 
     public List<String> findByMyChat(String userId){
